@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Persons";
+}
+
+@section scripts {
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/Home/Index.js"></script>
+}
+
+<div id="summaryDisplay" class="display">
+    <h4>Человеки</h4>
+    <table>
+        <thead>
+            <tr>
+                <th class="selectCol"></th>
+                <th class="nameCol">Имя</th>
+                <th class="surNameCol">Фамиля</th>
+                <th class="departnentCol">Отдел</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <tr><td colspan="3">The data is loading</td></tr>
+        </tbody>
+    </table>
+    <div id="buttonContainer">
+        <button id="refresh">Освежть</button>
+        <button id="add">Добавть</button>
+        <button id="edit">Поправть</button>
+        <button id="delete">Удалить</button>
+    </div>
+</div>
+<div id="addDisplay" class="display">
+    <h4>Add New Person</h4>
+    @{
+        AjaxOptions addAjaxOpts = new AjaxOptions
+        {
+            OnSuccess = "getData",
+            Url = "/api/PersonAPI"
+        };
+    }
+    @using (Ajax.BeginForm(addAjaxOpts))
+    {
+        @Html.Hidden("Id", 0)
+        <p><label>Имя:</label>@Html.Editor("Name")</p>
+        <p><label>Фамилия:</label>@Html.Editor("Surname")</p>
+        <p><label>Отдел:</label>@Html.Editor("DepartmentID")</p>
+        <button type="submit">Применть</button>
+    }
+</div>
+<div id="editDisplay" class="display">
+    <h4>Edit Reservation</h4>
+    <form id="editForm">
+        <input id="editId" type="hidden" name="Id" />
+        <p><label>Имя:</label><input id="editName" name="Name" /></p>
+        <p><label>Фамля:</label><input id="editSurname" name="Surname" /></p>
+        <p><label>Отдел:</label><input id="editDepartmentID" name="DepartmentID" /></p>
+    </form>
+    <button id="submitEdit" type="submit">Save</button>
+</div>

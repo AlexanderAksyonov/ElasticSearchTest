@@ -1,0 +1,14 @@
+﻿@model IEnumerable<string>
+
+
+@foreach (var link in Model)
+{
+    <div class="menuItem">
+        @Html.RouteLink(link, new
+        {
+            Controller = link,
+            action = "index"
+        })
+    </div>
+
+}
